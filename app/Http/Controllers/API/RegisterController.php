@@ -45,7 +45,7 @@ class RegisterController extends BaseController
      */
     public function login(Request $request): JsonResponse{
         // dd($request->all());
-        Log::Info($request->input('data')['users']['email']);
+        // Log::Info($request->input('data')['users']['email']);
     //   dump($request->email);
         if(auth::attempt(['email' => $request->input('data')['users']['email'], 'password' => $request->input('data')['users']['password']])){ 
             $user = Auth::user(); 

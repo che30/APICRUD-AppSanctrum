@@ -9,24 +9,25 @@ use App\Models\Product;
 use Validator;
 use App\Http\Resources\ProductResource;
 use Illuminate\Http\JsonResponse;
+use Log;
 
-class ProductController extends Controller
+class ProductController extends BaseController
 {
   
     public function index(): JsonResponse
     {
-        $products = Product::all();
+        $products = $request->input('data')['products'];
         return $this->sendResponse(ProductResource::collection($products), 'Products retrieved successfully.');
     }
    
     public function store(Request $request): JsonResponse
     {
-        $input = $request->all();
+        Log::Info($request->input('data'));
+        $input = $request->input('data')['products'];
         $validator = Validator::make($input, [
             'name' => 'required',
             'detail' => 'required'
         ]);
-        
         if($validator->fails()){
             return $this->sendError('Validation Error.', $validator->errors());       
         }
@@ -46,7 +47,7 @@ class ProductController extends Controller
 
     public function update(Request $request, Product $product): JsonResponse
     {
-        $input = $request->all();
+        $input =$request->input('data')['products'];
         $validator = Validator::make($input, [
             'name' => 'required',
             'detail' => 'required'
