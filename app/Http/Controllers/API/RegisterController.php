@@ -20,7 +20,7 @@ class RegisterController extends BaseController
      */
     public function register(Request $request): JsonResponse
     {
-        Log::Info($request->input('data')['users']['password']);
+        // Log::Info($request->input('data')['users']['password']);
         $validator = Validator::make($request->input('data')['users'], [
             'name' => 'required',
             'email' => 'required|email',
@@ -44,7 +44,7 @@ class RegisterController extends BaseController
      * @return \Illuminate\Http\Response
      */
     public function login(Request $request): JsonResponse{
-        dd($request->all());
+        // dd($request->all());
         Log::Info($request->input('data')['users']['email']);
     //   dump($request->email);
         if(auth::attempt(['email' => $request->input('data')['users']['email'], 'password' => $request->input('data')['users']['password']])){ 
