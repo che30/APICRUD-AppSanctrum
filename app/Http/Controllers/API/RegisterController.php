@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Validator;
 use Illuminate\Http\JsonResponse;
+use Log;
 
 class RegisterController extends BaseController
 {
@@ -40,9 +41,11 @@ class RegisterController extends BaseController
      *
      * @return \Illuminate\Http\Response
      */
-    public function login(Request $request): JsonResponse
-    {
-        if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){ 
+    public function login(Request $request): JsonResponse{
+        // dd($request->all());
+        Log::Info($request->input('data')['users']['email']);
+    //   dump($request->email);
+        if(auth::attempt(['email' => $request->input('data')['users']['email'], 'password' => $request->input('data')['users']['password']])){ 
             $user = Auth::user(); 
             $success['token'] =  $user->createToken('MyApp')->plainTextToken; 
             $success['name'] =  $user->name;

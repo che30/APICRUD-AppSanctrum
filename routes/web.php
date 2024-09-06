@@ -14,16 +14,9 @@ use App\Http\Controllers\API\ProductController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-Route::get('/hello', function () {
-    return "Hello World!";
-  });
-Route::controller(RegisterController::class)->group(function(){
-    Route::post('register', 'register');
-    Route::post('login', 'login');
-});
-Route::middleware('auth:sanctum')->group( function () {
-    Route::resource('products', ProductController::class);
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+// Route::get('/hello', function () {
+//     return "Hello World!";
+//   });
