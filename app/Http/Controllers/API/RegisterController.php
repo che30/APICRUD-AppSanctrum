@@ -20,16 +20,18 @@ class RegisterController extends BaseController
      */
     public function register(Request $request): JsonResponse
     {
-        $validator = Validator::make($request->all(), [
+        Log::Info($request->input('data')['users']['password']);
+        $validator = Validator::make($request->input('data')['users'], [
             'name' => 'required',
             'email' => 'required|email',
             'password' => 'required',
             'c_password' => 'required|same:password',
         ]);
+        // Log::Info($request->input('data'));
         if($validator->fails()){
             return $this->sendError('Validation Error.', $validator->errors());       
         }
-        $input = $request->all();
+        $input = $request->input('data')['users'];
         $input['password'] = bcrypt($input['password']);
         $user = User::create($input);
         $success['token'] =  $user->createToken('MyApp')->plainTextToken;
@@ -42,7 +44,7 @@ class RegisterController extends BaseController
      * @return \Illuminate\Http\Response
      */
     public function login(Request $request): JsonResponse{
-        // dd($request->all());
+        dd($request->all());
         Log::Info($request->input('data')['users']['email']);
     //   dump($request->email);
         if(auth::attempt(['email' => $request->input('data')['users']['email'], 'password' => $request->input('data')['users']['password']])){ 
