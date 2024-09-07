@@ -14,9 +14,9 @@ use Log;
 class ProductController extends BaseController
 {
   
-    public function index(): JsonResponse
-    {
-        $products = $request->input('data')['products'];
+    public function index(): JsonResponse                         
+    {  
+        $products = Product::all();                                                                                             
         return $this->sendResponse(ProductResource::collection($products), 'Products retrieved successfully.');
     }
    
